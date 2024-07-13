@@ -12,3 +12,4 @@ C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\refint\
 C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\tl1-proyectofinal2024-Augmait4.pdb
 C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\tl1-proyectofinal2024-Augmait4.genruntimeconfig.cache
 C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\ref\tl1-proyectofinal2024-Augmait4.dll
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\tl1-proyectofinal2024-Augmait4.sourcelink.json

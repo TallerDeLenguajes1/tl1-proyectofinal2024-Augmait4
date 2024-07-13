@@ -1,0 +1,14 @@
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\bin\Debug\net8.0\tl1-proyectofinal2024-Augmait4.exe
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\bin\Debug\net8.0\tl1-proyectofinal2024-Augmait4.deps.json
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\bin\Debug\net8.0\tl1-proyectofinal2024-Augmait4.runtimeconfig.json
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\bin\Debug\net8.0\tl1-proyectofinal2024-Augmait4.dll
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\bin\Debug\net8.0\tl1-proyectofinal2024-Augmait4.pdb
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\tl1-proyectofinal2024-Augmait4.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\tl1-proyectofinal2024-Augmait4.AssemblyInfoInputs.cache
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\tl1-proyectofinal2024-Augmait4.AssemblyInfo.cs
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\tl1-proyectofinal2024-Augmait4.csproj.CoreCompileInputs.cache
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\tl1-proyectofinal2024-Augmait4.dll
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\refint\tl1-proyectofinal2024-Augmait4.dll
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\tl1-proyectofinal2024-Augmait4.pdb
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\tl1-proyectofinal2024-Augmait4.genruntimeconfig.cache
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\ref\tl1-proyectofinal2024-Augmait4.dll

@@ -3,7 +3,7 @@ namespace Interfaz
 {
     public static class Cartel
     {
-                public static void LimpiarBuffer()
+        public static void LimpiarBuffer()
         {
             // Limpio el buffer para evitar bugs con las teclas que haya presionado el usuario durante el período de sleep
             while (Console.KeyAvailable)
@@ -11,14 +11,24 @@ namespace Interfaz
                 Console.ReadKey(true);
             }
         }
-                public static void TextoTiempo(string texto, int milisegundos, int tipo)
+        public static void TextoTiempo(string texto, int milisegundos, int tipo)
         {   //Uso el tipo para indicar si quiero que sea un texto con salto de linea (1) o sin salto de linea (0)
             if (tipo == 1) //pregunto antes de realizar el foreach para no hacer un mal uso de la memoria, ya que si fuera adentro el programa haria muchas comparaciones innecesarias
             {
                 foreach (char c in texto)
                 {
+                    if (Console.KeyAvailable)
+                    {
+                        var key = Console.ReadKey(intercept: true).Key;
+                        if (key == ConsoleKey.Spacebar || key == ConsoleKey.Enter)
+                        {
+                            Console.Write(texto.Substring(texto.IndexOf(c)));
+                            Console.WriteLine();
+                            return;
+                        }
+                    }
                     Console.Write(c);
-                    Thread.Sleep(milisegundos / texto.Length);
+                    Thread.Sleep(milisegundos);
                     LimpiarBuffer();
                 }
                 Console.WriteLine();
@@ -27,8 +37,18 @@ namespace Interfaz
             {
                 foreach (char c in texto)
                 {
+                    if (Console.KeyAvailable)
+                    {
+                        var key = Console.ReadKey(intercept: true).Key;
+                        if (key == ConsoleKey.Spacebar || key == ConsoleKey.Enter)
+                        {
+                            Console.Write(texto.Substring(texto.IndexOf(c)));
+                            Console.WriteLine();
+                            return;
+                        }
+                    }
                     Console.Write(c);
-                    Thread.Sleep(milisegundos / texto.Length);
+                    Thread.Sleep(milisegundos);
                     LimpiarBuffer();
                 }
             }
@@ -73,8 +93,17 @@ namespace Interfaz
 
             foreach (string linea in letraASCII)
             {
+                if (Console.KeyAvailable)
+                {
+                    var key = Console.ReadKey(intercept: true).Key;
+                    if (key == ConsoleKey.Spacebar || key == ConsoleKey.Enter)
+                    {
+                        break;
+                    }
+                }
                 int padding = (anchoTerminal - linea.Length) / 2;
                 centrado += new string(' ', padding) + linea + Environment.NewLine; //Enviroment.NewLine remplaza el uso de \r y \n y permite compatibilidad con distintos sistemas operativos
+
             }
             TextoTiempo(centrado, tiempo, 1);
         }

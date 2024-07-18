@@ -12,7 +12,6 @@ namespace menuSeleccionable
 
         public static void MostrarMenuConTituloCentrado()
         {
-            Cartel.TituloJuego(10); // Mostrar el título con animación
             MostrarMenuCentrado();
         }
 
@@ -27,7 +26,7 @@ namespace menuSeleccionable
             {
                 Console.Clear();
                 Cartel.TituloJuego(0);  // Mostrar el título sin animación
-
+                Console.ResetColor();
                 for (int i = 0; i < opciones.Length; i++)
                 {
                     string opcion = opciones[i];

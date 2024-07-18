@@ -1,6 +1,12 @@
 using System;
-using System.Timers;
 using Interfaz;
 using menuSeleccionable;
-Cartel.TituloJuego(6000);
+using Musica;
+using MonstersApi;
+using Rutas;
+using FabricaDePersonajes;
+await consumiendoApi.Get();
+Music.Inicio();
+Cartel.TituloJuego(7);
+CrearPersonaje.GenerarPersonajes(5);
 menuu.menu();

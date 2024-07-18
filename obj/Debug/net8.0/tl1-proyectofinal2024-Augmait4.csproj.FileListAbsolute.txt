@@ -17,3 +17,4 @@ C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\tl1-pro
 C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\bin\Debug\net8.0\System.Windows.Extensions.dll
 C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Windows.Extensions.dll
 C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\obj\Debug\net8.0\tl1-proy.2B2EEB2B.Up2Date
+C:\Users\augus\Documents\tl1-proyectofinal2024-Augmait4\bin\Debug\net8.0\Newtonsoft.Json.dll

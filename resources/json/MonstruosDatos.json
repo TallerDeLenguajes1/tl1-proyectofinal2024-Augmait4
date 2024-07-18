@@ -1,0 +1,87 @@
+[
+    {
+        "Estadisticas": {
+            "Velocidad": 3,
+            "Destreza": 2,
+            "Fuerza": 5,
+            "Nivel": 10,
+            "Armadura": 7,
+            "Salud": 0
+        },
+        "Informacion1": {
+            "Tipo": "Tipo0",
+            "Nombre1": "Ghidorah",
+            "Apodo1": "Apodo0",
+            "FechaNac1": "1771-07-18T17:26:29.5028422-03:00",
+            "Edad1": 37
+        }
+    },
+    {
+        "Estadisticas": {
+            "Velocidad": 3,
+            "Destreza": 5,
+            "Fuerza": 2,
+            "Nivel": 9,
+            "Armadura": 7,
+            "Salud": 0
+        },
+        "Informacion1": {
+            "Tipo": "Tipo1",
+            "Nombre1": "Methuselah",
+            "Apodo1": "Apodo1",
+            "FechaNac1": "1791-07-18T17:26:29.5036814-03:00",
+            "Edad1": 86
+        }
+    },
+    {
+        "Estadisticas": {
+            "Velocidad": 7,
+            "Destreza": 5,
+            "Fuerza": 9,
+            "Nivel": 3,
+            "Armadura": 4,
+            "Salud": 0
+        },
+        "Informacion1": {
+            "Tipo": "Tipo2",
+            "Nombre1": "Na_Kika",
+            "Apodo1": "Apodo2",
+            "FechaNac1": "1816-07-18T17:26:29.5038368-03:00",
+            "Edad1": 81
+        }
+    },
+    {
+        "Estadisticas": {
+            "Velocidad": 8,
+            "Destreza": 4,
+            "Fuerza": 6,
+            "Nivel": 2,
+            "Armadura": 8,
+            "Salud": 0
+        },
+        "Informacion1": {
+            "Tipo": "Tipo3",
+            "Nombre1": "King_Kong",
+            "Apodo1": "Apodo3",
+            "FechaNac1": "1824-07-18T17:26:29.5039766-03:00",
+            "Edad1": 172
+        }
+    },
+    {
+        "Estadisticas": {
+            "Velocidad": 5,
+            "Destreza": 4,
+            "Fuerza": 1,
+            "Nivel": 5,
+            "Armadura": 10,
+            "Salud": 0
+        },
+        "Informacion1": {
+            "Tipo": "Tipo4",
+            "Nombre1": "Rodan",
+            "Apodo1": "Apodo4",
+            "FechaNac1": "1830-07-18T17:26:29.504143-03:00",
+            "Edad1": 221
+        }
+    }
+]

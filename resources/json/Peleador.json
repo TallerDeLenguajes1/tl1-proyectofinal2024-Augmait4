@@ -1,0 +1,19 @@
+[
+    {
+        "Estadisticas": {
+            "Velocidad": 10,
+            "Destreza": 2,
+            "Fuerza": 5,
+            "Nivel": 6,
+            "Armadura": 10,
+            "Salud": 0
+        },
+        "Informacion": {
+            "Tipo": null,
+            "Nombre": "MUTO",
+            "Apodo": null,
+            "FechaNac": "0001-01-01T00:00:00",
+            "Edad": 3
+        }
+    }
+]

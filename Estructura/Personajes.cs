@@ -17,22 +17,22 @@ namespace CrearPersonajes
     }
     public class Caracteristicas{
         private string tipo;
-        private string Nombre;
-        private string Apodo;
-        private DateTime FechaNac;
-        private int Edad;
+        private string nombre;
+        private string apodo;
+        private DateTime fechaNac;
+        private int edad;
 
         public string Tipo { get => tipo; set => tipo = value; }
-        public string Nombre1 { get => Nombre; set => Nombre = value; }
-        public string Apodo1 { get => Apodo; set => Apodo = value; }
-        public DateTime FechaNac1 { get => FechaNac; set => FechaNac = value; }
-        public int Edad1 { get => Edad; set => Edad = value; }
+        public string Nombre { get => nombre; set => nombre = value; }
+        public string Apodo{ get => apodo; set => apodo = value; }
+        public DateTime FechaNac { get => fechaNac; set => fechaNac = value; }
+        public int Edad { get => edad; set => edad = value; }
     }
         public class Personaje{
         private Datos estadisticas;
         private Caracteristicas informacion;
 
         public Datos Estadisticas { get => estadisticas; set => estadisticas = value; }
-        public Caracteristicas Informacion1 { get => informacion; set => informacion = value; }
+        public Caracteristicas Informacion { get => informacion; set => informacion = value; }
     }
 }

@@ -9,32 +9,49 @@ namespace FabricaDePersonajes
     public static class CrearPersonaje
     {
         private static Random rand = new Random();
-        
+
         public static List<Personaje> GenerarPersonajes(int cantidad)
         {
             var personajes = new List<Personaje>();
-            for (int i = 0; i < cantidad; i++)
+            for (int i = 0; i <= cantidad; i++)
             {
                 Caracteristicas info = new Caracteristicas();
-                info.Tipo = "Tipo" + i;
-                info.Nombre1 = LeerMonstruos()[rand.Next(0,12)];
-                info.Apodo1 = "Apodo" + i;
-                info.FechaNac1 = DateTime.Now.AddYears(-rand.Next(0, 301));
-                info.Edad1 = rand.Next(0, 301);
+                info.Nombre = LeerMonstruos()[rand.Next(0, 11)];
+                if (info.Nombre == "Ghidorah")
+                {
+                    info.Tipo = "Alienigena";
+                    info.Apodo = "El Dragon Milenario";
+                }
+                if (PersonajeExiste(personajes, info.Nombre))// Verificar si el personaje ya existe
+                {
+                    continue; // Saltar a la siguiente iteración si el personaje ya existe
+                }
+                info.Edad = rand.Next(0, 301);
                 Datos Stats = new Datos();
-                    Stats.Velocidad = rand.Next(1, 11);
-                    Stats.Destreza = rand.Next(1, 6);
-                    Stats.Fuerza = rand.Next(1, 11);
-                    Stats.Nivel = rand.Next(1, 11);
-                    Stats.Armadura = rand.Next(1, 11);
+                Stats.Velocidad = rand.Next(1, 11);
+                Stats.Destreza = rand.Next(1, 6);
+                Stats.Fuerza = rand.Next(1, 11);
+                Stats.Nivel = rand.Next(1, 11);
+                Stats.Armadura = rand.Next(1, 11);
                 personajes.Add(new Personaje
                 {
-                    Informacion1 = info,
+                    Informacion = info,
                     Estadisticas = Stats,
                 });
             }
             GuardarPersonajes(personajes, @"resources/json/MonstruosDatos.json");
             return personajes;
+        }
+        public static bool PersonajeExiste(List<Personaje> personajes, string nombre)
+        {
+            foreach (var personaje in personajes)
+            {
+                if (personaje.Informacion.Nombre == nombre)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         public static void GuardarPersonajes(List<Personaje> personajes, string archivo)
         {

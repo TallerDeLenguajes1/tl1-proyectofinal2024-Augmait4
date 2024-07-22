@@ -14,6 +14,7 @@ namespace MonstersApi
     class consumiendoApi{
         private static readonly HttpClient client = new HttpClient();
         public static async Task Get(){
+            Console.CursorVisible = false;
             HttpResponseMessage response = await client.GetAsync(Ruta.urlApi);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();

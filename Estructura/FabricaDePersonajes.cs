@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ApodosYClases;
 using CrearPersonajes;
 namespace FabricaDePersonajes
 {
@@ -17,22 +18,20 @@ namespace FabricaDePersonajes
             {
                 Caracteristicas info = new Caracteristicas();
                 info.Nombre = LeerMonstruos()[rand.Next(0, 11)];
-                if (info.Nombre == "Ghidorah")
-                {
-                    info.Tipo = "Alienigena";
-                    info.Apodo = "El Dragon Milenario";
-                }
+                info.Apodo = ApYCl.CrearApodos(info.Nombre);
+                info.Tipo = ApYCl.CrearTipos(info.Nombre);
                 if (PersonajeExiste(personajes, info.Nombre))// Verificar si el personaje ya existe
                 {
                     continue; // Saltar a la siguiente iteración si el personaje ya existe
                 }
-                info.Edad = rand.Next(0, 301);
+                info.Edad = rand.Next(1000000, 300000000);
                 Datos Stats = new Datos();
-                Stats.Velocidad = rand.Next(1, 11);
-                Stats.Destreza = rand.Next(1, 6);
-                Stats.Fuerza = rand.Next(1, 11);
-                Stats.Nivel = rand.Next(1, 11);
-                Stats.Armadura = rand.Next(1, 11);
+                Stats.Velocidad = rand.Next(10, 20);
+                Stats.Destreza = rand.Next(10, 16);
+                Stats.Fuerza = rand.Next(10, 20);
+                Stats.Nivel = 1;
+                Stats.Armadura = rand.Next(10, 20);
+                Stats.Salud= 100;
                 personajes.Add(new Personaje
                 {
                     Informacion = info,

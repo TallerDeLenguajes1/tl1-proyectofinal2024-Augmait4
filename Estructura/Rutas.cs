@@ -10,5 +10,6 @@ namespace Rutas
         public static string[] menuInicial = {@"Jugar", @"Salir"};
         public static string[] menuJugador = {@"Ir a La Pelea",@"Rival",@"Estadisticas",@"Aumentar Estadisticas",@"Volver al Menu Principal"};
         public static string[] Dificultad = {@"Facil",@"Normal",@"Dificil"};
+        public static string[] MenuDeBatalla = {@"Atacar",@"Defender",@"Ataque Especial",@"Rendirse"};
     }
 }

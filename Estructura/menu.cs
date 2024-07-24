@@ -1,6 +1,7 @@
 using System;
 using Interfaz;
 using Rutas;
+using Combate;
 using FabricaDePersonajes;
 namespace menuSeleccionable
 {
@@ -121,6 +122,9 @@ namespace menuSeleccionable
                         Console.Clear();
                         switch (opcionSeleccionada)
                         {
+                            case 0:
+                                Batalla.combate();
+                                break;
                             case 4:
                                 MostrarMenuConTituloCentrado();
                                 break;
@@ -266,6 +270,68 @@ namespace menuSeleccionable
                 }
 
             } while (tecla != ConsoleKey.Enter);
+        }
+        public static int MenuDeBatalla()
+        {
+            int opcionSeleccionada = 0;
+            int anchoTerminal = Console.WindowWidth;
+            Console.ResetColor();
+            ConsoleKey tecla;
+            do
+            {
+                // Limpiar las opciones del menú antes de redibujarlas
+                Console.SetCursorPosition(0, 3);
+                for (int i = 0; i < Ruta.MenuDeBatalla.Length; i++)
+                {
+                    string opcion = Ruta.MenuDeBatalla[i];
+                    int padding = (anchoTerminal - opcion.Length) / 2;
+                    if (i == opcionSeleccionada)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine(new string(' ', padding) + ">> " + opcion);
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.WriteLine(new string(' ', padding) + "   " + opcion);
+                    }
+                }
+
+                tecla = Console.ReadKey(true).Key;
+
+                switch (tecla)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionSeleccionada = (opcionSeleccionada == 0) ? Ruta.MenuDeBatalla.Length - 1 : opcionSeleccionada - 1;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionSeleccionada = (opcionSeleccionada == Ruta.MenuDeBatalla.Length - 1) ? 0 : opcionSeleccionada + 1;
+                        break;
+                    case ConsoleKey.Enter:
+                        switch (opcionSeleccionada)
+                        {
+                            case 0:
+                                return 0;
+
+                            case 1:
+                                return 1;
+
+                            case 2:
+                                return 2;
+                        }
+                        break;
+                }
+
+                // Limpiar la consola después de cada interacción
+                Console.SetCursorPosition(0, 3);
+                for (int i = 1; i <= Ruta.MenuDeBatalla.Length; i++)
+                {
+                    Console.Write(new string(' ', Console.WindowWidth));
+                    Console.SetCursorPosition(0, i+3);
+                }
+
+            } while (tecla != ConsoleKey.Enter);
+            return 3;
         }
     }
 }

@@ -1,87 +1,53 @@
 [
     {
         "Estadisticas": {
-            "Velocidad": 1,
-            "Destreza": 2,
-            "Fuerza": 3,
-            "Nivel": 4,
-            "Armadura": 3,
-            "Salud": 0
+            "Velocidad": 14,
+            "Destreza": 14,
+            "Fuerza": 16,
+            "Nivel": 1,
+            "Armadura": 19,
+            "Salud": 100
         },
         "Informacion": {
-            "Tipo": "Alienigena",
-            "Nombre": "Ghidorah",
-            "Apodo": "El Dragon Milenario",
+            "Tipo": "Agua",
+            "Nombre": "Scylla",
+            "Apodo": "Guardi\u00E1n del Agua",
             "FechaNac": "0001-01-01T00:00:00",
-            "Edad": 43
+            "Edad": 134983112
         }
     },
     {
         "Estadisticas": {
-            "Velocidad": 2,
-            "Destreza": 2,
-            "Fuerza": 6,
-            "Nivel": 9,
-            "Armadura": 9,
-            "Salud": 0
+            "Velocidad": 11,
+            "Destreza": 11,
+            "Fuerza": 13,
+            "Nivel": 1,
+            "Armadura": 18,
+            "Salud": 100
         },
         "Informacion": {
-            "Tipo": null,
-            "Nombre": "Mokele_Mbembe",
-            "Apodo": null,
+            "Tipo": "Tierra",
+            "Nombre": "Methuselah",
+            "Apodo": "La Montania Andante",
             "FechaNac": "0001-01-01T00:00:00",
-            "Edad": 256
+            "Edad": 49399114
         }
     },
     {
         "Estadisticas": {
             "Velocidad": 10,
-            "Destreza": 4,
-            "Fuerza": 9,
-            "Nivel": 6,
-            "Armadura": 5,
-            "Salud": 0
+            "Destreza": 15,
+            "Fuerza": 18,
+            "Nivel": 1,
+            "Armadura": 15,
+            "Salud": 100
         },
         "Informacion": {
-            "Tipo": null,
-            "Nombre": "Leviathan",
-            "Apodo": null,
+            "Tipo": "Aire",
+            "Nombre": "MUTO",
+            "Apodo": "Massive Unidentified Terrestrial Organism,",
             "FechaNac": "0001-01-01T00:00:00",
-            "Edad": 92
-        }
-    },
-    {
-        "Estadisticas": {
-            "Velocidad": 1,
-            "Destreza": 5,
-            "Fuerza": 8,
-            "Nivel": 7,
-            "Armadura": 8,
-            "Salud": 0
-        },
-        "Informacion": {
-            "Tipo": null,
-            "Nombre": "Scylla",
-            "Apodo": null,
-            "FechaNac": "0001-01-01T00:00:00",
-            "Edad": 241
-        }
-    },
-    {
-        "Estadisticas": {
-            "Velocidad": 6,
-            "Destreza": 5,
-            "Fuerza": 9,
-            "Nivel": 9,
-            "Armadura": 4,
-            "Salud": 0
-        },
-        "Informacion": {
-            "Tipo": null,
-            "Nombre": "Rodan",
-            "Apodo": null,
-            "FechaNac": "0001-01-01T00:00:00",
-            "Edad": 274
+            "Edad": 216317091
         }
     }
 ]

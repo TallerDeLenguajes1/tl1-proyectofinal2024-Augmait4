@@ -1,6 +1,8 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
 using menuSeleccionable;
+using FabricaDePersonajes;
+using Combate;
 namespace Interfaz
 {
     public static class Cartel
@@ -170,6 +172,98 @@ namespace Interfaz
                         eleccion = 1;
                         return eleccion;
                     }
+                }
+            }
+        }
+        public static void VisordeVida(CrearPersonajes.Personaje peleador, CrearPersonajes.Personaje contrincante)
+        {
+            Console.Clear();
+            string[] cartel = new string[]
+            {
+        "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗",
+        $"║  Nombre: {peleador.Informacion.Nombre.PadRight(43)}     ║  Nombre: {contrincante.Informacion.Nombre.PadLeft(43)}                   ║",
+        "║══════════════════════════════════════════════════════════╬════════════════════════════════════════════════════════════════════════║",
+        $"║  Salud: {peleador.Estadisticas.Salud.ToString().PadRight(44)}     ║  Salud: {contrincante.Estadisticas.Salud.ToString().PadLeft(44)}                   ║",
+        $"║  Velocidad: {peleador.Estadisticas.Velocidad.ToString().PadRight(39)}      ║  Velocidad: {contrincante.Estadisticas.Velocidad.ToString().PadLeft(39)}                    ║",
+        $"║  Destreza: {peleador.Estadisticas.Destreza.ToString().PadRight(40)}      ║  Destreza: {contrincante.Estadisticas.Destreza.ToString().PadLeft(40)}                    ║",
+        $"║  Fuerza: {peleador.Estadisticas.Fuerza.ToString().PadRight(42)}      ║  Fuerza: {contrincante.Estadisticas.Fuerza.ToString().PadLeft(42)}                    ║",
+        $"║  Nivel: {peleador.Estadisticas.Nivel.ToString().PadRight(43)}      ║  Nivel: {contrincante.Estadisticas.Nivel.ToString().PadLeft(43)}                    ║",
+        $"║  Armadura: {peleador.Estadisticas.Armadura.ToString().PadRight(40)}      ║  Armadura: {contrincante.Estadisticas.Armadura.ToString().PadLeft(40)}                    ║",
+        "╚══════════════════════════════════════════════════════════╩════════════════════════════════════════════════════════════════════════╝"
+            };
+            int anchoTerminal = Console.WindowWidth;
+            foreach (string linea in cartel)
+            {
+                int padding = (anchoTerminal - linea.Length) / 2;
+                if (padding > 0)
+                {
+                    Console.WriteLine(new string(' ', padding) + linea);
+                }
+                else
+                {
+                    Console.WriteLine(linea);
+                }
+            }
+        }
+        public static void VisordeVidaPelador(CrearPersonajes.Personaje peleador)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
+            string[] cartel = new string[]
+            {
+        "╔══════════════════════════════════════════════════════════╗",
+        $"║  Nombre: {peleador.Informacion.Nombre.PadRight(43)}     ║",
+        "║══════════════════════════════════════════════════════════║",
+        $"║  Salud: {peleador.Estadisticas.Salud.ToString().PadRight(44)}     ║",
+        $"║  Velocidad: {peleador.Estadisticas.Velocidad.ToString().PadRight(39)}      ║",
+        $"║  Destreza: {peleador.Estadisticas.Destreza.ToString().PadRight(40)}      ║",
+        $"║  Fuerza: {peleador.Estadisticas.Fuerza.ToString().PadRight(42)}      ║",
+        $"║  Nivel: {peleador.Estadisticas.Nivel.ToString().PadRight(43)}      ║",
+        $"║  Armadura: {peleador.Estadisticas.Armadura.ToString().PadRight(40)}      ║",
+        "╚══════════════════════════════════════════════════════════╝"
+            };
+            int anchoTerminal = Console.WindowWidth;
+            foreach (string linea in cartel)
+            {
+                int padding = (anchoTerminal - linea.Length) / 2;
+                if (padding > 0)
+                {
+                    Console.WriteLine(new string(' ', padding) + linea);
+                }
+                else
+                {
+                    Console.WriteLine(linea);
+                }
+            }
+        }
+                public static void VisordeVidaRival(CrearPersonajes.Personaje contrincante)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            string[] cartel = new string[]
+            {
+        "╔══════════════════════════════════════════════════════════════════════════╗",
+        $"║  Nombre: {contrincante.Informacion.Nombre.PadLeft(43)}                   ║",
+        "║════════════════════════════════════════════════════════════════════════║",
+        $"║  Salud: {contrincante.Estadisticas.Salud.ToString().PadLeft(44)}                   ║",
+        $"║  Velocidad: {contrincante.Estadisticas.Velocidad.ToString().PadLeft(39)}                    ║",
+        $"║  Destreza: {contrincante.Estadisticas.Destreza.ToString().PadLeft(40)}                    ║",
+        $"║  Fuerza: {contrincante.Estadisticas.Fuerza.ToString().PadLeft(42)}                    ║",
+        $"║  Nivel: {contrincante.Estadisticas.Nivel.ToString().PadLeft(43)}                    ║",
+        $"║  Armadura: {contrincante.Estadisticas.Armadura.ToString().PadLeft(40)}                    ║",
+        "╚══════════════════════════════════════════════════════════════════════════╝"
+            };
+            int anchoTerminal = Console.WindowWidth;
+            foreach (string linea in cartel)
+            {
+                int padding = (anchoTerminal - linea.Length) / 2;
+                if (padding > 0)
+                {
+                    Console.WriteLine(new string(' ', padding) + linea);
+                }
+                else
+                {
+                    Console.WriteLine(linea);
                 }
             }
         }

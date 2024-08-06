@@ -1,18 +1,18 @@
 namespace CrearPersonajes
 {
     public  class Datos{
-        private int velocidad;
-        private int destreza;
-        private int fuerza;
-        private int nivel;
-        private int armadura;
+        private float velocidad;
+        private float destreza;
+        private float fuerza;
+        private float nivel;
+        private float armadura;
         private float salud;
 
-        public int Velocidad { get => velocidad; set => velocidad = value; }
-        public int Destreza { get => destreza; set => destreza = value; }
-        public int Fuerza { get => fuerza; set => fuerza = value; }
-        public int Nivel { get => nivel; set => nivel = value; }
-        public int Armadura { get => armadura; set => armadura = value; }
+        public float Velocidad { get => velocidad; set => velocidad = value; }
+        public float Destreza { get => destreza; set => destreza = value; }
+        public float Fuerza { get => fuerza; set => fuerza = value; }
+        public float Nivel { get => nivel; set => nivel = value; }
+        public float Armadura { get => armadura; set => armadura = value; }
         public float Salud { get => salud; set => salud = value; }
     }
     public class Caracteristicas{

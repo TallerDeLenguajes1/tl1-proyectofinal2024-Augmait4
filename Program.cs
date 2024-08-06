@@ -9,5 +9,5 @@ Console.CursorVisible = false;
 await consumiendoApi.Get();
 Music.Inicio();
 Cartel.TituloJuego(7);
-CrearPersonaje.GenerarPersonajes(6);
+
 menuu.menu();

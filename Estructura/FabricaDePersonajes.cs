@@ -14,7 +14,7 @@ namespace FabricaDePersonajes
         public static List<Personaje> GenerarPersonajes(int cantidad)
         {
             var personajes = new List<Personaje>();
-            for (int i = 0; i <= cantidad; i++)
+            for (int i = 0; i < cantidad; i++)
             {
                 Caracteristicas info = new Caracteristicas();
                 info.Nombre = LeerMonstruos()[rand.Next(0, 11)];

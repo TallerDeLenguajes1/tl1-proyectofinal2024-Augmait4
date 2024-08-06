@@ -1,0 +1,36 @@
+[
+    {
+        "Estadisticas": {
+            "Velocidad": 10,
+            "Destreza": 14,
+            "Fuerza": 19,
+            "Nivel": 1,
+            "Armadura": 19,
+            "Salud": 28
+        },
+        "Informacion": {
+            "Tipo": null,
+            "Nombre": "Ghidorah",
+            "Apodo": null,
+            "FechaNac": "0001-01-01T00:00:00",
+            "Edad": 131266958
+        }
+    },
+    {
+        "Estadisticas": {
+            "Velocidad": 16,
+            "Destreza": 12,
+            "Fuerza": 17,
+            "Nivel": 1,
+            "Armadura": 14,
+            "Salud": 24
+        },
+        "Informacion": {
+            "Tipo": null,
+            "Nombre": "Ghidorah",
+            "Apodo": null,
+            "FechaNac": "0001-01-01T00:00:00",
+            "Edad": 25489917
+        }
+    }
+]

@@ -3,6 +3,7 @@ using Interfaz;
 using Rutas;
 using Combate;
 using FabricaDePersonajes;
+using CrearPersonajes;
 namespace menuSeleccionable
 {
     public static class menuu
@@ -77,7 +78,7 @@ namespace menuSeleccionable
 
             } while (tecla != ConsoleKey.Enter);
         }
-        public static void MostrarMenuJugadorCentrado()
+        public static int MostrarMenuJugadorCentrado()
         {
             int opcionSeleccionada = 0;
             int anchoTerminal = Console.WindowWidth;
@@ -123,20 +124,25 @@ namespace menuSeleccionable
                         switch (opcionSeleccionada)
                         {
                             case 0:
-                                Batalla.combate();
-                                break;
+                                return 0;
+                            case 1:
+                                return 1;
+                            case 2:
+                                return 2;
+                            case 3:
+                                return 3;
                             case 4:
-                                MostrarMenuConTituloCentrado();
-                                break;
+                                return 4;
                                 // Lógica para otras opciones
                         }
                         break;
                 }
-
+                
                 // Volver a colocar el cursor en la posición inicial para sobreescribir solo las opciones del menú
                 Console.SetCursorPosition(0, Cartel.letraASCII.Length + 2);
 
             } while (tecla != ConsoleKey.Enter);
+            return 9999;
         }
         public static void MostrarDificultad()
         {
@@ -181,19 +187,19 @@ namespace menuSeleccionable
                         switch (opcionSeleccionada)
                         {
                             case 0:
+                                CrearPersonaje.GenerarPersonajes(4);
                                 Cartel.Introduccion(10, Cartel.Inicio);
                                 MenuSeleccionPersonajes();
-                                MostrarMenuJugadorCentrado();
                                 break;
                             case 1:
+                                CrearPersonaje.GenerarPersonajes(6);
                                 Cartel.Introduccion(10, Cartel.Inicio);
                                 MenuSeleccionPersonajes();
-                                MostrarMenuJugadorCentrado();
                                 break;
                             case 2:
+                                CrearPersonaje.GenerarPersonajes(8);
                                 Cartel.Introduccion(10, Cartel.Inicio);
                                 MenuSeleccionPersonajes();
-                                MostrarMenuJugadorCentrado();
                                 break;
                         }
                         break;
@@ -214,9 +220,13 @@ namespace menuSeleccionable
 
             // Mostrar menú de selección
             Console.Clear();
-            Console.WriteLine("Selecciona un personaje:");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Green;
             int opcionSeleccionada = 0;
+            string Encabezado = "Selecciona un personaje:";
             int anchoTerminal = Console.WindowWidth;
+            int padding2 = (anchoTerminal - Encabezado.Length) / 2;
+            Console.WriteLine(new string(' ', padding2) + Encabezado);
             Console.ResetColor();
             ConsoleKey tecla;
             do
@@ -252,12 +262,8 @@ namespace menuSeleccionable
                     case ConsoleKey.Enter:
                         Console.Clear();
                         // Guardar personaje seleccionado y los restantes
-                        CrearPersonajes.Personaje peleador = personajes[opcionSeleccionada];
-                        List<CrearPersonajes.Personaje> contrincantes = new List<CrearPersonajes.Personaje>(personajes);
-                        contrincantes.RemoveAt(opcionSeleccionada);
-
-                        CrearPersonaje.GuardarPersonajes(new List<CrearPersonajes.Personaje> { peleador }, @"resources/json/Peleador.json");
-                        CrearPersonaje.GuardarPersonajes(contrincantes, @"resources/json/Contrincantes.json");
+                        CrearLuchadores(personajes, opcionSeleccionada);
+                        Batalla.combate();
                         break;
                 }
 
@@ -271,6 +277,16 @@ namespace menuSeleccionable
 
             } while (tecla != ConsoleKey.Enter);
         }
+
+        private static void CrearLuchadores(List<Personaje> personajes, int opcionSeleccionada)
+        {
+            CrearPersonajes.Personaje peleador = personajes[opcionSeleccionada];
+            List<CrearPersonajes.Personaje> contrincantes = new List<CrearPersonajes.Personaje>(personajes);
+            contrincantes.RemoveAt(opcionSeleccionada);
+            CrearPersonaje.GuardarPersonajes(new List<CrearPersonajes.Personaje> { peleador }, @"resources/json/Peleador.json");
+            CrearPersonaje.GuardarPersonajes(contrincantes, @"resources/json/Contrincantes.json");
+        }
+
         public static int MenuDeBatalla()
         {
             int opcionSeleccionada = 0;
@@ -280,7 +296,7 @@ namespace menuSeleccionable
             do
             {
                 // Limpiar las opciones del menú antes de redibujarlas
-                Console.SetCursorPosition(0, 3);
+                Console.SetCursorPosition(0, 17);
                 for (int i = 0; i < Ruta.MenuDeBatalla.Length; i++)
                 {
                     string opcion = Ruta.MenuDeBatalla[i];
@@ -323,11 +339,11 @@ namespace menuSeleccionable
                 }
 
                 // Limpiar la consola después de cada interacción
-                Console.SetCursorPosition(0, 3);
+                Console.SetCursorPosition(0, 17);
                 for (int i = 1; i <= Ruta.MenuDeBatalla.Length; i++)
                 {
                     Console.Write(new string(' ', Console.WindowWidth));
-                    Console.SetCursorPosition(0, i+3);
+                    Console.SetCursorPosition(0, i + 17);
                 }
 
             } while (tecla != ConsoleKey.Enter);

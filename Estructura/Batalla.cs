@@ -17,8 +17,8 @@ namespace Combate
             int desicionGanandor = 2;
             int cont = 1;
             int puntosDeAumentos = 0;
-            List<CrearPersonajes.Personaje> Peleador = CrearPersonaje.LeerPersonajes(@"resources\json\Peleador.json");
-            List<CrearPersonajes.Personaje> Contrincantes = CrearPersonaje.LeerPersonajes(@"resources\json\Contrincantes.json");
+            List<CrearPersonajes.Personaje> Peleador = CrearPersonaje.LeerPersonajes(Ruta.rutaArchivosJson[3]);
+            List<CrearPersonajes.Personaje> Contrincantes = CrearPersonaje.LeerPersonajes(Ruta.rutaArchivosJson[2]);
             CrearPersonajes.Personaje peleador = Peleador[0];
             Random rand = new Random();
             CrearPersonajes.Personaje contrincante = Contrincantes[rand.Next(0, Contrincantes.Count)];
@@ -244,7 +244,7 @@ namespace Combate
                 List<CrearPersonajes.Personaje> ganadores = new List<CrearPersonajes.Personaje>();
                 try
                 {
-                    ganadores = CrearPersonaje.LeerPersonajes(@"resources\json/Ganadores.json");
+                    ganadores = CrearPersonaje.LeerPersonajes(Ruta.rutaArchivosJson[1]);
                 }
                 catch (Exception ex)
                 {
@@ -252,7 +252,7 @@ namespace Combate
                     Console.WriteLine("No se pudo leer el archivo de ganadores existentes: " + ex.Message);
                 }
                 ganadores.Add(luchador);
-                CrearPersonaje.GuardarPersonajes(ganadores, @"resources/json/Ganadores.json");
+                CrearPersonaje.GuardarPersonajes(ganadores, Ruta.rutaArchivosJson[1]);
             }
         }
         private static int razonamientoIA(CrearPersonajes.Personaje Peleador, CrearPersonajes.Personaje Contrincante, int contPoder)

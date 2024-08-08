@@ -10,7 +10,7 @@ namespace ApodosYClases
             Caracteristicas inform = new Caracteristicas();
             switch (nombre)
             {
-                case "Ghidora":
+                case "Ghidorah":
                     return "El Dragon Milenario";
                 case "Godzilla":
                     return "Depredador Alfa";
@@ -45,7 +45,7 @@ namespace ApodosYClases
             Caracteristicas inform = new Caracteristicas();
             switch (nombre)
             {
-                case "Ghidora":
+                case "Ghidorah":
                     return "Alienigena";
                 case "Godzilla":
                     return "Agua";

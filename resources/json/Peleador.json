@@ -1,1 +1,19 @@
-[{"Estadisticas":{"Velocidad":12,"Destreza":12,"Fuerza":19,"Nivel":1,"Armadura":19,"Salud":100},"Informacion":{"Tipo":"Agua","Nombre":"Scylla","Apodo":"Guardi\u00E1n del Agua","Edad":1488910},"FechaVictoria":"0001-01-01T00:00:00"}]
+[
+    {
+        "Estadisticas": {
+            "Velocidad": 10,
+            "Destreza": 10,
+            "Fuerza": 16,
+            "Nivel": 1,
+            "Armadura": 13,
+            "Salud": 100
+        },
+        "Informacion": {
+            "Tipo": "Alienigena",
+            "Nombre": "Ghidorah",
+            "Apodo": "El Dragon Milenario",
+            "Edad": 1147530
+        },
+        "FechaVictoria": "0001-01-01T00:00:00"
+    }
+]

@@ -33,11 +33,11 @@ namespace MonstersApi
                 }
 
                 string json2 = JsonConvert.SerializeObject(monsterNames, Formatting.Indented);
-                await File.WriteAllTextAsync(@"resources/backup/NombreMonstruos.json", json2);
-                await File.WriteAllTextAsync(@"resources/backup/InformacionMonstruos.json", json);
+                await File.WriteAllTextAsync(Ruta.rutaArchivosBackup[0], json2);
+                await File.WriteAllTextAsync(Ruta.rutaArchivosBackup[1], json);
 
                 Console.WriteLine("CONEXION EXITOSA CON LA BASE DE DATOS DE MONARCA.");
-                Console.WriteLine("Manten Presiona la Barra Espaciadora para Saltar la Animacion....");
+                Console.WriteLine("Manten Presionada la Barra Espaciadora para Saltar la Animacion....");
                 Thread.Sleep(3000);
             }
             catch (HttpRequestException)
@@ -46,7 +46,7 @@ namespace MonstersApi
                 Thread.Sleep(1000);
                 try
                 {
-                    string backupJson = await File.ReadAllTextAsync(@"resources/backup/InformacionMonstruos.json");
+                    string backupJson = await File.ReadAllTextAsync(Ruta.rutaArchivosBackup[1]);
                     List<MonstruosDatos> listMonsters = JsonConvert.DeserializeObject<List<MonstruosDatos>>(backupJson);
                 }
                 catch (FileNotFoundException)

@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using ApodosYClases;
 using CrearPersonajes;
+using Rutas;
 namespace FabricaDePersonajes
 {
     public static class CrearPersonaje
@@ -37,7 +38,7 @@ namespace FabricaDePersonajes
                     Estadisticas = Stats,
                 });
             }
-            GuardarPersonajes(personajes, @"resources/json/MonstruosDatos.json");
+            GuardarPersonajes(personajes, Ruta.rutaArchivosJson[0]);
             return personajes;
         }
         public static bool PersonajeExiste(List<Personaje> personajes, string nombre)
@@ -64,7 +65,7 @@ namespace FabricaDePersonajes
         }
         private static List<string> LeerMonstruos()
         {
-            string pathMonstruos = @"resources/backup/NombreMonstruos.json";
+            string pathMonstruos = Ruta.rutaArchivosBackup[0];
             string jsonMonstruos = File.ReadAllText(pathMonstruos);
             List<string> nombresMonstruos = JsonSerializer.Deserialize<List<string>>(jsonMonstruos);
             return nombresMonstruos;
@@ -78,8 +79,8 @@ namespace FabricaDePersonajes
             CrearPersonajes.Personaje peleador = personajes[opcionSeleccionada];
             List<CrearPersonajes.Personaje> contrincantes = new List<CrearPersonajes.Personaje>(personajes);
             contrincantes.RemoveAt(opcionSeleccionada);
-            CrearPersonaje.GuardarPersonajes(new List<CrearPersonajes.Personaje> { peleador }, @"resources/json/Peleador.json");
-            CrearPersonaje.GuardarPersonajes(contrincantes, @"resources/json/Contrincantes.json");
+            CrearPersonaje.GuardarPersonajes(new List<CrearPersonajes.Personaje> { peleador }, Ruta.rutaArchivosJson[3]);
+            CrearPersonaje.GuardarPersonajes(contrincantes, Ruta.rutaArchivosJson[2]);
         }
     }
 }

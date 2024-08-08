@@ -70,7 +70,6 @@ namespace menuSeleccionable
                             Cartel.MostrarGanadores(ganadores);
                                 break;
                             case 2:
-                                // Lógica para la segunda opción
                                 break;
                         }
                         break;
@@ -187,21 +186,21 @@ namespace menuSeleccionable
                         {
                             case 0:
                                 CrearPersonaje.GenerarPersonajes(4);
-                                Console.WriteLine("Manten Presiona la Barra Espaciadora para Saltar la Animacion....");
+                                Console.WriteLine("Manten Presionada la Barra Espaciadora para Saltar la Animacion....");
                                 Thread.Sleep(3000);
                                 Cartel.Introduccion(10, Cartel.Inicio);
                                 MenuSeleccionPersonajes();
                                 break;
                             case 1:
                                 CrearPersonaje.GenerarPersonajes(6);
-                                Console.WriteLine("Manten Presiona la Barra Espaciadora para Saltar la Animacion....");
+                                Console.WriteLine("Manten Presionada la Barra Espaciadora para Saltar la Animacion....");
                                 Thread.Sleep(3000);
                                 Cartel.Introduccion(10, Cartel.Inicio);
                                 MenuSeleccionPersonajes();
                                 break;
                             case 2:
                                 CrearPersonaje.GenerarPersonajes(8);
-                                Console.WriteLine("Manten Presiona la Barra Espaciadora para Saltar la Animacion....");
+                                Console.WriteLine("Manten Presionada la Barra Espaciadora para Saltar la Animacion....");
                                 Thread.Sleep(3000);
                                 Cartel.Introduccion(10, Cartel.Inicio);
                                 MenuSeleccionPersonajes();
@@ -215,7 +214,7 @@ namespace menuSeleccionable
         }
         public static void MenuSeleccionPersonajes()
         {
-            List<CrearPersonajes.Personaje> personajes = CrearPersonaje.LeerPersonajes(@"resources/json/MonstruosDatos.json"); // Leer personajes desde el archivo
+            List<CrearPersonajes.Personaje> personajes = CrearPersonaje.LeerPersonajes(Ruta.rutaArchivosJson[0]); // Leer personajes desde el archivo
 
             if (personajes.Count == 0)
             {

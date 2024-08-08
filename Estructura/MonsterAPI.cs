@@ -11,7 +11,8 @@ using System.Globalization;
 using Newtonsoft.Json.Converters;
 namespace MonstersApi
 {
-    class consumiendoApi{
+    class consumiendoApi
+    {
         private static readonly HttpClient client = new HttpClient();
 
         public static async Task Get()
@@ -48,6 +49,8 @@ namespace MonstersApi
                 {
                     string backupJson = await File.ReadAllTextAsync(Ruta.rutaArchivosBackup[1]);
                     List<MonstruosDatos> listMonsters = JsonConvert.DeserializeObject<List<MonstruosDatos>>(backupJson);
+                    Console.WriteLine("Manten Presionada la Barra Espaciadora para Saltar la Animacion....");
+                    Thread.Sleep(3000);
                 }
                 catch (FileNotFoundException)
                 {
@@ -64,7 +67,7 @@ namespace MonstersApi
             }
         }
     }
-        public partial class MonstruosDatos
+    public partial class MonstruosDatos
     {
         [JsonProperty("id")]
         public long Id { get; set; }
@@ -83,5 +86,5 @@ namespace MonstersApi
 
         [JsonProperty("link")]
         public Uri Link { get; set; }
-    } 
+    }
 }

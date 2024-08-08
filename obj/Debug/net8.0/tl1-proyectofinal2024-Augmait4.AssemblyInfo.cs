@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("tl1-proyectofinal2024-Augmait4")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+81559fa781cf68e467c0fcc623d19594ea820a0f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+08f1f37bd85e1ae5fc60fbfa2cb4df7b25760209")]
 [assembly: System.Reflection.AssemblyProductAttribute("tl1-proyectofinal2024-Augmait4")]
 [assembly: System.Reflection.AssemblyTitleAttribute("tl1-proyectofinal2024-Augmait4")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -26,7 +26,6 @@ namespace menuSeleccionable
             Console.Clear();
             Cartel.TituloJuegoRapido(0, Cartel.letraASCII);
             Console.ResetColor();
-
             ConsoleKey tecla;
             do
             {
@@ -67,15 +66,17 @@ namespace menuSeleccionable
                                 MostrarDificultad();
                                 break;
                             case 1:
+                            List<CrearPersonajes.Personaje> ganadores = CrearPersonaje.LeerPersonajes(@"resources\json\Ganadores.json");
+                            Cartel.MostrarGanadores(ganadores);
+                                break;
+                            case 2:
                                 // Lógica para la segunda opción
                                 break;
                         }
                         break;
                 }
-
                 // Volver a colocar el cursor en la posición inicial para sobreescribir solo las opciones del menú
                 Console.SetCursorPosition(0, Cartel.letraASCII.Length + 2);
-
             } while (tecla != ConsoleKey.Enter);
         }
         public static int MostrarMenuJugadorCentrado()
@@ -131,13 +132,11 @@ namespace menuSeleccionable
                                 return 2;
                             case 3:
                                 return 3;
-                            case 4:
+                            default:
+                                MostrarMenuConTituloCentrado();
                                 return 4;
-                                // Lógica para otras opciones
                         }
-                        break;
                 }
-                
                 // Volver a colocar el cursor en la posición inicial para sobreescribir solo las opciones del menú
                 Console.SetCursorPosition(0, Cartel.letraASCII.Length + 2);
 
@@ -188,16 +187,22 @@ namespace menuSeleccionable
                         {
                             case 0:
                                 CrearPersonaje.GenerarPersonajes(4);
+                                Console.WriteLine("Manten Presiona la Barra Espaciadora para Saltar la Animacion....");
+                                Thread.Sleep(3000);
                                 Cartel.Introduccion(10, Cartel.Inicio);
                                 MenuSeleccionPersonajes();
                                 break;
                             case 1:
                                 CrearPersonaje.GenerarPersonajes(6);
+                                Console.WriteLine("Manten Presiona la Barra Espaciadora para Saltar la Animacion....");
+                                Thread.Sleep(3000);
                                 Cartel.Introduccion(10, Cartel.Inicio);
                                 MenuSeleccionPersonajes();
                                 break;
                             case 2:
                                 CrearPersonaje.GenerarPersonajes(8);
+                                Console.WriteLine("Manten Presiona la Barra Espaciadora para Saltar la Animacion....");
+                                Thread.Sleep(3000);
                                 Cartel.Introduccion(10, Cartel.Inicio);
                                 MenuSeleccionPersonajes();
                                 break;
@@ -262,7 +267,7 @@ namespace menuSeleccionable
                     case ConsoleKey.Enter:
                         Console.Clear();
                         // Guardar personaje seleccionado y los restantes
-                        CrearLuchadores(personajes, opcionSeleccionada);
+                        CrearPersonaje.CrearLuchadores(personajes, opcionSeleccionada);
                         Batalla.combate();
                         break;
                 }
@@ -277,16 +282,70 @@ namespace menuSeleccionable
 
             } while (tecla != ConsoleKey.Enter);
         }
-
-        private static void CrearLuchadores(List<Personaje> personajes, int opcionSeleccionada)
+        public static int MostrarMenuAumentoEstadisticas(CrearPersonajes.Personaje peleador, int puntosAumento)
         {
-            CrearPersonajes.Personaje peleador = personajes[opcionSeleccionada];
-            List<CrearPersonajes.Personaje> contrincantes = new List<CrearPersonajes.Personaje>(personajes);
-            contrincantes.RemoveAt(opcionSeleccionada);
-            CrearPersonaje.GuardarPersonajes(new List<CrearPersonajes.Personaje> { peleador }, @"resources/json/Peleador.json");
-            CrearPersonaje.GuardarPersonajes(contrincantes, @"resources/json/Contrincantes.json");
-        }
+            int opcionSeleccionada = 0;
+            int anchoTerminal = Console.WindowWidth;
+            Console.Clear();
+            Cartel.VisordeVidaPelador(peleador);
+            Console.ResetColor();
+            ConsoleKey tecla;
+            do
+            {
+                // Posicionar el cursor donde comienza el menú para no recargar el título
+                Console.SetCursorPosition(0, 12);
+                string Encabezado = $"Puntos Disponibles:{puntosAumento}";
+                int padding2 = (anchoTerminal - Encabezado.Length) / 2;
+                Console.WriteLine(new string(' ', padding2) + Encabezado);
+                for (int i = 0; i < Ruta.MenuEstadisticas.Length; i++)
+                {
+                    string opcion = Ruta.MenuEstadisticas[i];
+                    int padding = (anchoTerminal - opcion.Length) / 2;
+                    if (i == opcionSeleccionada)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine(new string(' ', padding) + ">> " + opcion);
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.WriteLine(new string(' ', padding) + "   " + opcion);
+                    }
+                }
 
+                tecla = Console.ReadKey(true).Key;
+
+                switch (tecla)
+                {
+                    case ConsoleKey.UpArrow:
+                        opcionSeleccionada = (opcionSeleccionada == 0) ? Ruta.MenuEstadisticas.Length - 1 : opcionSeleccionada - 1;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        opcionSeleccionada = (opcionSeleccionada == Ruta.MenuEstadisticas.Length - 1) ? 0 : opcionSeleccionada + 1;
+                        break;
+                    case ConsoleKey.Enter:
+                        Console.Clear();
+                        switch (opcionSeleccionada)
+                        {
+                            case 0:
+                                return 0;
+                            case 1:
+                                return 1;
+                            case 2:
+                                return 2;
+                            case 3:
+                                return 3;
+                            case 4:
+                                return 4;
+                        }
+                        break;
+                }
+                // Volver a colocar el cursor en la posición inicial para sobreescribir solo las opciones del menú
+                Console.SetCursorPosition(0, 12);
+
+            } while (tecla != ConsoleKey.Enter);
+            return 9999;
+        }
         public static int MenuDeBatalla()
         {
             int opcionSeleccionada = 0;

@@ -1,6 +1,7 @@
 namespace CrearPersonajes
 {
-    public  class Datos{
+    public class Datos
+    {
         private float velocidad;
         private float destreza;
         private float fuerza;
@@ -15,24 +16,26 @@ namespace CrearPersonajes
         public float Armadura { get => armadura; set => armadura = value; }
         public float Salud { get => salud; set => salud = value; }
     }
-    public class Caracteristicas{
+    public class Caracteristicas
+    {
         private string tipo;
         private string nombre;
         private string apodo;
-        private DateTime fechaNac;
+
         private int edad;
 
         public string Tipo { get => tipo; set => tipo = value; }
         public string Nombre { get => nombre; set => nombre = value; }
-        public string Apodo{ get => apodo; set => apodo = value; }
-        public DateTime FechaNac { get => fechaNac; set => fechaNac = value; }
+        public string Apodo { get => apodo; set => apodo = value; }
         public int Edad { get => edad; set => edad = value; }
     }
-        public class Personaje{
+    public class Personaje
+    {
         private Datos estadisticas;
         private Caracteristicas informacion;
-
+        private DateTime fechaVictoria;
         public Datos Estadisticas { get => estadisticas; set => estadisticas = value; }
         public Caracteristicas Informacion { get => informacion; set => informacion = value; }
+        public DateTime FechaVictoria { get => fechaVictoria; set => fechaVictoria = value; }
     }
 }

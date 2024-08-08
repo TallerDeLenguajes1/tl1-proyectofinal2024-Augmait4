@@ -13,21 +13,55 @@ namespace MonstersApi
 {
     class consumiendoApi{
         private static readonly HttpClient client = new HttpClient();
-        public static async Task Get(){
-            Console.CursorVisible = false;
-            HttpResponseMessage response = await client.GetAsync(Ruta.urlApi);
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            List<MonstruosDatos> listMonsters = JsonConvert.DeserializeObject<List<MonstruosDatos>>(responseBody);
-            string json = JsonConvert.SerializeObject(listMonsters, Formatting.Indented);
-            List<string> monsterNames = new List<string>();
-            foreach (var monster in listMonsters)
+
+        public static async Task Get()
+        {
+
+            try
             {
-                monsterNames.Add(monster.Name);
+                HttpResponseMessage response = await client.GetAsync(Ruta.urlApi);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                List<MonstruosDatos> listMonsters = JsonConvert.DeserializeObject<List<MonstruosDatos>>(responseBody);
+
+                string json = JsonConvert.SerializeObject(listMonsters, Formatting.Indented);
+                List<string> monsterNames = new List<string>();
+
+                foreach (var monster in listMonsters)
+                {
+                    monsterNames.Add(monster.Name);
+                }
+
+                string json2 = JsonConvert.SerializeObject(monsterNames, Formatting.Indented);
+                await File.WriteAllTextAsync(@"resources/backup/NombreMonstruos.json", json2);
+                await File.WriteAllTextAsync(@"resources/backup/InformacionMonstruos.json", json);
+
+                Console.WriteLine("CONEXION EXITOSA CON LA BASE DE DATOS DE MONARCA.");
+                Console.WriteLine("Manten Presiona la Barra Espaciadora para Saltar la Animacion....");
+                Thread.Sleep(3000);
             }
-            string json2 = JsonConvert.SerializeObject(monsterNames, Formatting.Indented);
-            await File.WriteAllTextAsync(@"resources/json/NombreMonstruos.json", json2);
-            await File.WriteAllTextAsync(@"resources/json/InformacionMonstruos.json", json);
+            catch (HttpRequestException)
+            {
+                Console.WriteLine("No se pudo conectar con MONARCA. Cargando datos del respaldo...");
+                Thread.Sleep(1000);
+                try
+                {
+                    string backupJson = await File.ReadAllTextAsync(@"resources/backup/InformacionMonstruos.json");
+                    List<MonstruosDatos> listMonsters = JsonConvert.DeserializeObject<List<MonstruosDatos>>(backupJson);
+                }
+                catch (FileNotFoundException)
+                {
+                    Console.WriteLine("El archivo de respaldo no existe.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al leer el archivo de respaldo: {ex.Message}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ocurrió un error inesperado: {ex.Message}");
+            }
         }
     }
         public partial class MonstruosDatos

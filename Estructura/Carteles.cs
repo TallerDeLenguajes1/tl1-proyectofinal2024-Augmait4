@@ -153,43 +153,55 @@ namespace Interfaz
                 centrado += lineaCentrada;
             }
 
-            TextoTiempo(centrado, tiempo, 1);
+            // Ejecutar la animación en un hilo separado
+            Task animacionTask = Task.Run(() => TextoTiempo(centrado, tiempo, 1));
 
-            // Verificar si se presionó una tecla
-            while (true)
+            // Verificar si se presiona una tecla para saltar la animación
+            while (!animacionTask.IsCompleted)
             {
                 if (Console.KeyAvailable)
                 {
                     var key = Console.ReadKey(intercept: true).Key;
                     if (key == ConsoleKey.Spacebar || key == ConsoleKey.Enter)
                     {
-                        Console.Clear();
-                        // Mostrar el cartel completo antes de borrar la pantalla
-                        Console.WriteLine(centrado);
-                        // Esperar un breve momento para que el usuario pueda ver el cartel completo
-                        System.Threading.Thread.Sleep(2000);
-                        Console.Clear();
-                        eleccion = 1;
-                        return eleccion;
+                        // Cancelar la animación
+                        break;
                     }
                 }
             }
+
+            // Esperar a que la animación se complete si no se canceló
+            animacionTask.Wait();
+
+            // Mostrar el cartel completo después de la animación
+            Console.Clear();
+            Console.WriteLine(centrado);
+
+            // Esperar un breve momento para que el usuario pueda ver el cartel completo
+            System.Threading.Thread.Sleep(2000);
+            Console.Clear();
+            eleccion = 1;
+
+            return eleccion;
         }
-        public static void VisordeVida(CrearPersonajes.Personaje peleador, CrearPersonajes.Personaje contrincante)
+
+        public static void VisordeVida(CrearPersonajes.Personaje peleador, CrearPersonajes.Personaje contrincante, int contPoderAliado, int contPoderEnemigo)
         {
             Console.Clear();
+            string orden = $"{contPoderAliado}/3";
             string[] cartel = new string[]
             {
-        "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗",
-        $"║  Nombre: {peleador.Informacion.Nombre.PadRight(43)}     ║  Nombre: {contrincante.Informacion.Nombre.PadLeft(43)}                   ║",
-        "║══════════════════════════════════════════════════════════╬════════════════════════════════════════════════════════════════════════║",
-        $"║  Salud: {peleador.Estadisticas.Salud.ToString().PadRight(44)}     ║  Salud: {contrincante.Estadisticas.Salud.ToString().PadLeft(44)}                   ║",
-        $"║  Velocidad: {peleador.Estadisticas.Velocidad.ToString().PadRight(39)}      ║  Velocidad: {contrincante.Estadisticas.Velocidad.ToString().PadLeft(39)}                    ║",
-        $"║  Destreza: {peleador.Estadisticas.Destreza.ToString().PadRight(40)}      ║  Destreza: {contrincante.Estadisticas.Destreza.ToString().PadLeft(40)}                    ║",
-        $"║  Fuerza: {peleador.Estadisticas.Fuerza.ToString().PadRight(42)}      ║  Fuerza: {contrincante.Estadisticas.Fuerza.ToString().PadLeft(42)}                    ║",
-        $"║  Nivel: {peleador.Estadisticas.Nivel.ToString().PadRight(43)}      ║  Nivel: {contrincante.Estadisticas.Nivel.ToString().PadLeft(43)}                    ║",
-        $"║  Armadura: {peleador.Estadisticas.Armadura.ToString().PadRight(40)}      ║  Armadura: {contrincante.Estadisticas.Armadura.ToString().PadLeft(40)}                    ║",
-        "╚══════════════════════════════════════════════════════════╩════════════════════════════════════════════════════════════════════════╝"
+    "╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗",
+    $"║  Nombre: {peleador.Informacion.Nombre.PadRight(43)}     ║  Nombre: {contrincante.Informacion.Nombre.PadLeft(43)}                   ║",
+    "║══════════════════════════════════════════════════════════╬════════════════════════════════════════════════════════════════════════║",
+    $"║  Salud: {peleador.Estadisticas.Salud.ToString().PadRight(44)}     ║  Salud: {contrincante.Estadisticas.Salud.ToString().PadLeft(44)}                   ║",
+    $"║  Velocidad: {peleador.Estadisticas.Velocidad.ToString().PadRight(39)}      ║  Velocidad: {contrincante.Estadisticas.Velocidad.ToString().PadLeft(39)}                    ║",
+    $"║  Destreza: {peleador.Estadisticas.Destreza.ToString().PadRight(40)}      ║  Destreza: {contrincante.Estadisticas.Destreza.ToString().PadLeft(40)}                    ║",
+    $"║  Fuerza: {peleador.Estadisticas.Fuerza.ToString().PadRight(42)}      ║  Fuerza: {contrincante.Estadisticas.Fuerza.ToString().PadLeft(42)}                    ║",
+    $"║  Nivel: {peleador.Estadisticas.Nivel.ToString().PadRight(43)}      ║  Nivel: {contrincante.Estadisticas.Nivel.ToString().PadLeft(43)}                    ║",
+    $"║  Armadura: {peleador.Estadisticas.Armadura.ToString().PadRight(40)}      ║  Armadura: {contrincante.Estadisticas.Armadura.ToString().PadLeft(40)}                    ║",
+    $"║  Poder Especial: {orden.PadRight(30)}          ║  Poder Especial: {contPoderEnemigo.ToString().PadLeft(30)}/3                      ║",
+    "╚══════════════════════════════════════════════════════════╩════════════════════════════════════════════════════════════════════════╝"
             };
             int anchoTerminal = Console.WindowWidth;
             foreach (string linea in cartel)
@@ -236,13 +248,13 @@ namespace Interfaz
                 }
             }
         }
-                public static void VisordeVidaRival(CrearPersonajes.Personaje contrincante)
+        public static void VisordeVidaRival(CrearPersonajes.Personaje contrincante)
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
             string[] cartel = new string[]
             {
-        "╔══════════════════════════════════════════════════════════════════════════╗",
+        "╔════════════════════════════════════════════════════════════════════════╗",
         $"║  Nombre: {contrincante.Informacion.Nombre.PadLeft(43)}                   ║",
         "║════════════════════════════════════════════════════════════════════════║",
         $"║  Salud: {contrincante.Estadisticas.Salud.ToString().PadLeft(44)}                   ║",
@@ -251,7 +263,7 @@ namespace Interfaz
         $"║  Fuerza: {contrincante.Estadisticas.Fuerza.ToString().PadLeft(42)}                    ║",
         $"║  Nivel: {contrincante.Estadisticas.Nivel.ToString().PadLeft(43)}                    ║",
         $"║  Armadura: {contrincante.Estadisticas.Armadura.ToString().PadLeft(40)}                    ║",
-        "╚══════════════════════════════════════════════════════════════════════════╝"
+        "╚════════════════════════════════════════════════════════════════════════╝"
             };
             int anchoTerminal = Console.WindowWidth;
             foreach (string linea in cartel)
@@ -266,6 +278,134 @@ namespace Interfaz
                     Console.WriteLine(linea);
                 }
             }
+        }
+        public static string[] Victoria = new string[]{
+@"███████╗███████╗██╗     ██╗ ██████╗██╗██████╗  █████╗ ██████╗  █████╗ ██████╗ ███████╗███████╗",
+@"██╔════╝██╔════╝██║     ██║██╔════╝██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔════╝",
+@"█████╗  █████╗  ██║     ██║██║     ██║██║  ██║███████║██║  ██║███████║██║  ██║█████╗  ███████╗",
+@"██╔══╝  ██╔══╝  ██║     ██║██║     ██║██║  ██║██╔══██║██║  ██║██╔══██║██║  ██║██╔══╝  ╚════██║",
+@"██║     ███████╗███████╗██║╚██████╗██║██████╔╝██║  ██║██████╔╝██║  ██║██████╔╝███████╗███████║",
+@"╚═╝     ╚══════╝╚══════╝╚═╝ ╚═════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝",
+@" ██████╗  █████╗ ███╗   ██╗ █████╗ ███████╗████████╗███████╗",
+@"██╔════╝ ██╔══██╗████╗  ██║██╔══██╗██╔════╝╚══██╔══╝██╔════╝",
+@"██║  ███╗███████║██╔██╗ ██║███████║███████╗   ██║   █████╗  ",
+@"██║   ██║██╔══██║██║╚██╗██║██╔══██║╚════██║   ██║   ██╔══╝  ",
+@"╚██████╔╝██║  ██║██║ ╚████║██║  ██║███████║   ██║   ███████╗",
+@" ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝   ╚═╝   ╚══════╝",
+@"⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣶⣤⣤⣤⣤⣀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣄⠀⠀⣤⠀⢀⣄⣀⣠⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣦⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣆⢠⣿⣧⡀⣽⣷⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡀⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣅⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣶⣶⣾⣷⣤⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣄⣀⣤⣄⢠⡀⣀⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣿⣿⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠻⣿⣿⣿⣿⣿⣯⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⢿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠚⠛⢿⣿⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣷⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⣦⣀⣠⣴⣶⣿⠶⠄⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⣿⣿⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠈⠻⣿⣿⣿⣿⠟⢛⣿⣿⣿⣿⣿⣶⣶⣿⡂",
+@"⠀⠀⠀⠀⠀⠀⠀⣨⣿⣿⣿⣿⣿⢇⠸⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠀⠀⠀⠀⠀⠀⠈⠙⠛⠿⣿⣿⣿⣯⣽⣿⣿⡿⠃",
+@"⠀⠀⠀⠀⠀⠀⢰⣿⣿⣿⠟⢹⣿⠈⢰⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠛⠻⠿⠟⠀⠀"
+    };
+        public static string[] Derrota = new string[]{
+@" ██████╗  █████╗ ███╗   ███╗███████╗     ██████╗ ██╗   ██╗███████╗██████╗ ",
+@"██╔════╝ ██╔══██╗████╗ ████║██╔════╝    ██╔═══██╗██║   ██║██╔════╝██╔══██╗",
+@"██║  ███╗███████║██╔████╔██║█████╗      ██║   ██║██║   ██║█████╗  ██████╔╝",
+@"██║   ██║██╔══██║██║╚██╔╝██║██╔══╝      ██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗",
+@"╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗    ╚██████╔╝ ╚████╔╝ ███████╗██║  ██║",
+@" ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝     ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝",
+@"        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠂⢱⣠⣤⡄⠀⢸⣼⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣇⣻⣿⣿⣿⣆⢈⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⣿⡟⣿⣼⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡿⣿⠘⣿⣧⣿⣿⣾⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣿⢳⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣇⣴⡶⣶⠶⢤⡀⠀⠀⠀⠀⠀⠀⠀⢘⣷⣿⡼⣾⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣤⣀⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣿⡿⣇⠀⠸⣿⢷⡄⠀⠀⠀⢀⣴⣿⡟⣷⣿⡇⠻⣿⢦⡀⠀⠀⠀⠀⠀⢸⣿⣿⣷⣾⣿⣿⡾⠁⠀⠀⠀⠀⠀⠀⢀⣴⡾⢿⡇⣼⢣⠟⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣿⢡⢿⡄⠀⠘⢧⣻⡀⠀⠀⣸⡟⣿⣽⡸⡏⣇⣉⠸⣿⢿⣦⠀⠀⠀⠀⠘⣿⣿⣿⣼⣿⣿⠁⠀⠀⠀⠀⠀⢀⡴⣿⠟⣡⣺⡇⡇⢸⠃⢸⣧⠀⠀⢀⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣿⡹⢾⣧⠀⠀⢍⣻⣿⡁⠀⢸⣯⣿⣿⡗⢿⣿⢻⣶⠘⣯⢿⣧⠀⠀⠀⠀⣿⣿⠼⣿⡉⣁⠀⠀⠀⠀⠀⣠⣿⣵⣿⣬⣾⠯⣷⡇⢸⢂⣿⢾⠀⢠⣾⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣿⢧⡹⡞⣇⠀⠀⢈⢻⣿⣦⣹⣿⠹⣿⣿⣸⣿⣿⣿⡀⠼⣿⣿⡇⠀⠀⠀⢻⣿⣿⣯⠟⠛⠀⠀⠀⠊⣣⣿⣿⣿⣿⢹⠋⣀⣿⠇⣸⣿⢋⣿⣠⢯⡞⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣿⣣⢗⣹⡹⡆⠀⠀⠈⠙⢿⣹⣿⣿⣽⣿⣿⠻⣟⢿⣷⡄⠾⣿⣿⡄⠀⠀⢹⣿⡏⢿⣷⡁⠀⠀⠀⢠⡿⣹⣯⡿⠇⣾⠀⠺⣇⡆⢸⡟⣸⡿⢣⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣷⢫⣷⠌⣇⢹⡄⠀⠀⠀⠀⠙⢯⡿⣿⣿⣿⢁⡋⠙⣿⣃⠟⣼⡹⣷⠀⠀⢺⡷⢿⣏⣻⡇⠀⠀⠀⣾⡇⣿⣟⡆⢠⠇⠀⠠⣏⣻⣿⣷⣟⣡⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⢯⣻⡼⣏⣽⡄⢻⡀⠀⠀⠀⠀⠀⠙⢿⣿⣿⣿⡇⠀⢿⣧⢛⢦⣛⣿⡆⠀⣻⣕⣫⢿⣬⣿⡄⠀⢸⣯⢻⣼⣿⢣⡞⠀⠀⠀⢻⣿⣿⣿⠿⠁⠀⠀⠀⠀⠀⣠⠀⠀⠀⠀⠀⠀⠀",
+@"⣟⢶⡹⣭⢏⣧⠘⣷⠀⠀⠀⠀⠀⠀⠀⠈⠻⣿⡿⢢⠘⣧⣏⠶⣩⢿⣷⠀⣹⡞⡴⢫⡱⣻⣧⠀⢸⣿⢹⣿⡿⠁⢠⠀⠀⠀⢼⣿⣿⠇⠀⠀⠀⠀⠀⠀⢠⡟⠀⠀⠀⠀⠀⠀⠀",
+@"⣎⢳⡙⣮⢿⣿⡀⢸⣦⠀⠀⠀⠀⠀⠀⠈⠀⠉⠁⠀⠀⣿⣎⠵⣩⢿⣼⠀⣼⡛⣜⢣⠳⣽⣿⡀⢸⡽⢸⣟⣻⣷⣆⠀⠀⠀⠲⠿⠉⠀⠀⠀⠀⠀⠀⠀⡟⠁⠀⠀⠀⠀⠀⠀⠀",
+@"⣎⠧⣝⠲⢯⣿⣷⣤⢿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢘⣯⣚⢥⡻⣼⡇⢾⡹⣌⢧⢛⡴⣿⡇⢸⡇⣿⢸⣿⣼⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣎⠷⡌⢏⡳⢽⣿⣿⣞⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⣿⠙⣿⣻⣶⢿⣷⣿⡳⣜⢪⢇⠞⣿⣇⣼⡱⣞⣇⣿⣳⢿⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠾⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣮⢓⡜⣣⡙⢦⡜⢿⣿⣞⡟⣧⣄⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡅⣻⣿⣷⣿⢯⣱⣎⣧⣎⣽⠷⡿⢿⣰⡿⣹⣿⠏⢸⡆⠀⠀⠀⠀⠀⠀⠀⣠⡾⡁⣠⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⡧⣏⠾⣴⡹⣲⢍⡞⢿⣿⡿⣝⢿⣷⢦⣀⠀⠀⠀⠀⢠⣿⢿⣷⢨⡓⢿⣿⢯⡹⣍⢯⡹⣋⡟⡴⣩⣿⢱⣿⡏⣠⠈⣧⠀⠀⠀⠀⢀⣴⠞⠁⠀⣠⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⡷⢎⡟⢶⡹⢵⡚⡜⣌⡿⣿⣽⣎⡟⣿⣭⣦⣀⠀⠀⣼⢿⡌⢿⣧⠜⣹⣟⢮⡵⣚⠶⣱⢣⣝⠲⣙⢿⣾⣿⣇⡷⠀⣿⠀⠀⣀⣰⠟⠁⠀⢀⡜⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣟⡣⢎⠱⠌⠢⢽⡹⣜⡐⢛⠿⣿⣾⣽⣛⣛⢛⡛⣿⣿⣷⡛⣯⢻⣬⣿⣟⢮⡳⣭⢫⣕⡫⣜⢣⣾⣟⣯⣿⢻⡇⠀⠘⡷⡏⠉⠁⢀⡟⠀⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣞⠵⡆⢀⠠⡰⢯⡵⣎⣽⠣⢎⠹⢿⣶⡷⣬⠳⡼⣏⣿⣾⢿⣞⠀⠻⣿⣟⢮⡳⢧⣫⠖⡽⣘⠦⣿⢻⣯⠻⣧⣿⣆⠀⠙⢹⡆⠀⠘⠀⠀⠀⠀⠀⠀⠀⣤⠖⠀⠀⠀⠀⠀⠀⠀",
+@"⡽⣻⣇⢾⣗⡹⢎⡵⣫⢞⡹⢢⣑⠪⡹⣿⣧⣿⣵⣭⡗⣮⣿⣿⡇⢹⣿⣿⢧⣛⠧⢧⣛⡵⣍⠞⣿⡸⢿⢧⣙⠻⢿⡄⠑⢼⣷⢇⠀⠀⠀⠀⠀⠀⠰⣾⣅⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⣿⣱⢟⣦⡙⠿⡭⢞⡵⣫⡝⣧⢣⢓⠰⣿⣂⢆⡙⠿⡟⢶⣦⣿⠄⣾⣿⣹⡷⣭⢛⡵⣊⢶⡩⠞⡽⡙⢆⣃⡹⠳⣶⠃⠀⠀⠁⡈⠀⠀⠀⠀⠀⠀⠀⢀⡇⠀⠀⠀⠀⠀⠀⠀⠀",
+@"⡷⢯⡾⣭⢟⡷⣌⢣⣛⡵⣻⡜⣿⡜⡐⣻⣇⠾⣀⢃⡘⡙⠧⠠⠌⢹⣿⣾⡷⣩⢞⡲⣭⠲⣍⢏⡲⣉⠆⠤⠁⠀⠘⡇⠀⠀⠀⢀⣤⣤⣤⡄⠀⠀⣴⣿⠀⠀⠀⠀⠀⠀⠄⠠⠁",
+@"⣿⢯⣷⣛⣮⢳⡝⣶⢩⡞⣧⣛⢿⣶⣵⣿⢋⡞⡰⢂⠰⣀⢂⠡⠘⢄⠺⣿⡷⣍⢮⡕⣎⠳⣜⠪⡔⢡⠊⠄⠁⠀⢀⡤⠀⢀⣀⡼⠏⣀⣘⣁⣀⡴⠛⠋⠀⠀⠀⠀⠠⠈⠤⠑⡈",
+@"⣿⣻⡾⣝⣮⢷⡹⡖⣏⢾⡱⢯⡞⣭⢿⣎⢳⠸⢷⣎⠒⡠⠌⢂⠡⢈⠒⡽⣿⡜⢦⡹⣌⠳⣌⠓⡌⠐⡀⠰⠖⠛⠉⠀⠐⠛⣯⡇⠀⢀⡀⠉⠁⠀⠀⠀⠀⠀⠀⠄⠡⡉⢄⠃⡔",
+@"⣿⣯⢿⡽⣮⢷⡹⣝⢮⡳⣝⣻⡝⣮⢿⡏⢶⠁⣦⠙⠷⣄⡂⢄⠂⢃⠒⡌⢿⡿⣌⠷⡬⢓⠬⡑⠨⠐⠀⠀⠀⠈⠁⠒⠁⣼⡵⠟⠒⠉⠀⠀⠀⠀⡀⠀⠠⢀⠡⡘⢠⠑⡌⢒⠠",
+@"⣿⣿⣟⡿⣽⢾⣝⡾⣳⣏⢷⣣⢿⡜⣣⠝⡸⠀⢼⣏⢢⠈⢻⡄⠊⢄⠂⡘⠸⢟⣾⢱⢊⣍⠒⠄⠁⠂⠀⠀⢠⠀⠀⢠⡞⠁⠀⠀⣀⣀⣀⡐⡈⠔⠠⡁⢢⠁⢆⡑⢢⠑⠄⣃⠆",
+@"⣿⣿⣿⣿⣯⣟⣮⢷⣻⠾⣝⣮⣿⡛⠤⠃⠐⠀⠨⢹⢊⢧⡀⠈⠠⢀⠀⠠⠁⠈⠉⠓⡈⠌⠈⠀⢀⡀⠀⠉⠀⠀⢠⡾⠃⠀⢀⠀⡀⠈⠉⡅⠠⣉⠂⠡⢀⡉⠤⠈⢂⠱⢌⠰⢈",
+@"⣿⣿⣿⣿⣟⣿⣞⣯⢷⣻⡽⢶⣻⣶⣄⡈⠀⠀⠤⢉⠆⡈⠣⢀⠀⠂⢄⡀⠒⢀⠂⠀⠀⠀⠀⢀⣠⣝⣃⡴⠂⣠⠟⠀⠀⠀⠂⠀⡀⢀⠀⡇⠐⡠⢈⠁⠂⠀⠀⡁⢂⠘⡄⠣⠀",
+@"⣿⣿⣿⣿⣿⣿⣻⢾⣯⣗⣻⢯⣳⣛⣞⣗⢢⠐⡌⢂⠚⡅⠒⠤⡀⠁⢢⠼⠷⠾⠶⠧⠶⠶⠥⠬⢷⣿⣷⣦⣞⠁⠐⢆⣀⣐⣠⣤⠔⢀⢂⡘⣤⡱⠂⠀⡀⠄⢂⡁⠆⡐⢠⢡⢡",
+@"⣿⣿⣿⣿⣿⣿⣻⣿⢾⡽⣞⣯⢷⣻⡼⣽⣆⢧⡰⢡⡚⣬⢡⢣⣿⠟⣛⢛⡛⣳⠳⡖⠞⡚⠀⠒⠲⠿⢛⠛⠫⣽⠿⠿⠟⠛⠛⠛⣚⡚⡥⠾⠟⠁⠀⠀⡐⠄⠢⠐⡌⡔⢣⢎⡳",
+@"⣿⣿⣿⣿⣿⣿⢯⣟⣯⣽⣛⡾⣯⢷⣻⢧⣟⡶⣭⠳⣜⡲⡽⣿⢿⡜⣥⢫⡜⢥⠳⣜⠱⢢⠩⢄⠀⡐⠂⡜⠰⣠⠂⡔⡈⠴⣤⣀⣀⣀⣤⣀⣀⡤⢀⡀⠆⡘⢄⠣⢰⡉⢞⡬⢳",
+@"⣿⣿⣿⣿⣿⣿⣿⢿⣞⡷⣯⢿⡽⣯⢷⣻⢾⣝⡞⣿⢎⣷⣿⣿⣿⣿⣼⣧⣾⣷⣭⣾⣛⠷⠓⠬⠤⠐⣒⣌⣡⣤⣵⣤⣱⣦⣤⣭⣍⣭⣉⡍⣩⢽⡛⡛⠶⡱⢊⡲⢡⢎⡱⢎⡳"
+    };
+        public static void MostrarGanadores(List<CrearPersonajes.Personaje> ganadores)
+        {
+            Random random = new Random();
+            Array colors = Enum.GetValues(typeof(ConsoleColor));
+            foreach (var ganador in ganadores)
+            {
+                Console.Clear(); // Limpia la pantalla antes de mostrar el siguiente ganador
+
+                // Selecciona un color de primer plano aleatorio
+                ConsoleColor primerPlanoColor = (ConsoleColor)colors.GetValue(random.Next(colors.Length));
+
+                // Asegúrate de que los colores de fondo y de primer plano no sean iguales
+                do
+                {
+                    primerPlanoColor = (ConsoleColor)colors.GetValue(random.Next(colors.Length));
+                } while (primerPlanoColor == ConsoleColor.Black);
+                Console.ForegroundColor = primerPlanoColor;
+                string[] cartel = new string[]
+                {
+        "╔════════════════════════════════════════════════════════════════════════╗",
+        $"║  Personaje: {ganador.Informacion.Nombre?.PadLeft(36) ?? "".PadLeft(36)}                       ║",
+        "║════════════════════════════════════════════════════════════════════════║",
+        $"║  Tipo: {ganador.Informacion.Tipo?.PadLeft(38) ?? "".PadLeft(38)}                          ║",
+        $"║  Apodo: {ganador.Informacion.Apodo?.PadLeft(42) ?? "".PadLeft(43)}                     ║",
+        $"║  Fecha de Victoria: {ganador.FechaVictoria}                                  ║",
+        $"║  Edad: {ganador.Informacion.Edad.ToString().PadLeft(44)}                    ║",
+        "║════════════════════════════════════════════════════════════════════════║",
+        $"║  Salud: {ganador.Estadisticas.Salud.ToString().PadLeft(44)}                   ║",
+        $"║  Velocidad: {ganador.Estadisticas.Velocidad.ToString().PadLeft(39)}                    ║",
+        $"║  Destreza: {ganador.Estadisticas.Destreza.ToString().PadLeft(40)}                    ║",
+        $"║  Fuerza: {ganador.Estadisticas.Fuerza.ToString().PadLeft(42)}                    ║",
+        $"║  Nivel: {ganador.Estadisticas.Nivel.ToString().PadLeft(43)}                    ║",
+        $"║  Armadura: {ganador.Estadisticas.Armadura.ToString().PadLeft(40)}                    ║",
+        "╚════════════════════════════════════════════════════════════════════════╝"
+                };
+                int anchoTerminal = Console.WindowWidth;
+                foreach (string linea in cartel)
+                {
+                    int padding = (anchoTerminal - linea.Length) / 2;
+                    if (padding > 0)
+                    {
+                        Console.WriteLine(new string(' ', padding) + linea);
+                    }
+                    else
+                    {
+                        Console.WriteLine(linea);
+                    }
+                }
+                Console.ResetColor();
+                Thread.Sleep(3000); // Pausa de 3 segundos
+            }
+            menuu.MostrarMenuCentrado();
         }
     }
 }

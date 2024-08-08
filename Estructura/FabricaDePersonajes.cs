@@ -17,21 +17,20 @@ namespace FabricaDePersonajes
             for (int i = 0; i < cantidad; i++)
             {
                 Caracteristicas info = new Caracteristicas();
-                info.Nombre = LeerMonstruos()[rand.Next(0, 11)];
+                do
+                {
+                    info.Nombre = LeerMonstruos()[rand.Next(0, 11)];
+                } while (PersonajeExiste(personajes, info.Nombre));
                 info.Apodo = ApYCl.CrearApodos(info.Nombre);
                 info.Tipo = ApYCl.CrearTipos(info.Nombre);
-                if (PersonajeExiste(personajes, info.Nombre))// Verificar si el personaje ya existe
-                {
-                    continue; // Saltar a la siguiente iteración si el personaje ya existe
-                }
-                info.Edad = rand.Next(1000000, 300000000);
+                info.Edad = rand.Next(1000000, 3000000);
                 Datos Stats = new Datos();
                 Stats.Velocidad = rand.Next(10, 20);
                 Stats.Destreza = rand.Next(10, 16);
                 Stats.Fuerza = rand.Next(10, 20);
                 Stats.Nivel = 1;
                 Stats.Armadura = rand.Next(10, 20);
-                Stats.Salud= 100;
+                Stats.Salud = 100;
                 personajes.Add(new Personaje
                 {
                     Informacion = info,
@@ -63,9 +62,9 @@ namespace FabricaDePersonajes
             var json = File.ReadAllText(archivo);
             return JsonSerializer.Deserialize<List<Personaje>>(json);
         }
-        public static List<string> LeerMonstruos()
+        private static List<string> LeerMonstruos()
         {
-            string pathMonstruos = @"resources/json/NombreMonstruos.json";
+            string pathMonstruos = @"resources/backup/NombreMonstruos.json";
             string jsonMonstruos = File.ReadAllText(pathMonstruos);
             List<string> nombresMonstruos = JsonSerializer.Deserialize<List<string>>(jsonMonstruos);
             return nombresMonstruos;
@@ -73,6 +72,14 @@ namespace FabricaDePersonajes
         public static bool Existe(string archivo)
         {
             return File.Exists(archivo) && new FileInfo(archivo).Length > 0;
+        }
+        public static void CrearLuchadores(List<Personaje> personajes, int opcionSeleccionada)
+        {
+            CrearPersonajes.Personaje peleador = personajes[opcionSeleccionada];
+            List<CrearPersonajes.Personaje> contrincantes = new List<CrearPersonajes.Personaje>(personajes);
+            contrincantes.RemoveAt(opcionSeleccionada);
+            CrearPersonaje.GuardarPersonajes(new List<CrearPersonajes.Personaje> { peleador }, @"resources/json/Peleador.json");
+            CrearPersonaje.GuardarPersonajes(contrincantes, @"resources/json/Contrincantes.json");
         }
     }
 }
